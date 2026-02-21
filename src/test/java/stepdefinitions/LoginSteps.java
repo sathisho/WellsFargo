@@ -6,7 +6,7 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import pages.LoginPage;
-import utils.ConfigReader;
+import config.ConfigReader;
 import utils.DriverFactory;
 
 public class LoginSteps {
