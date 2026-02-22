@@ -1,0 +1,11 @@
+{
+  "framework": "WellsFargo Enterprise Automation",
+  "version": "1.0",
+  "environment": "SIT",
+  "browser": "chrome",
+  "execution_date": "2026-02-22T15:26:21.320511",
+  "java_version": "25",
+  "os": "Mac OS X 26.2",
+  "total_scenarios": 3,
+  "result": "FAIL"
+}

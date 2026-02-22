@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SWIFT MT103 — Single Customer Credit Transfer Sample -->
+<SwiftMessage>
+    <Header>
+        <MessageType>MT103</MessageType>
+        <SenderBIC>WFBIUS6SXXX</SenderBIC>
+        <ReceiverBIC>CHASUS33XXX</ReceiverBIC>
+        <MessageReference>REF-20260222-001</MessageReference>
+    </Header>
+    <Body>
+        <Field20>TXN-20260222-001</Field20>
+        <Field23B>CRED</Field23B>
+        <Field32A>
+            <Date>260222</Date>
+            <Currency>USD</Currency>
+            <Amount>5000.00</Amount>
+        </Field32A>
+        <Field50K>
+            <AccountNumber>123456789</AccountNumber>
+            <Name>Wells Fargo Automation</Name>
+            <Address>420 Montgomery St, San Francisco, CA</Address>
+        </Field50K>
+        <Field59>
+            <AccountNumber>987654321</AccountNumber>
+            <Name>SWIFT Test Beneficiary</Name>
+            <Address>383 Madison Ave, New York, NY</Address>
+        </Field59>
+        <Field71A>OUR</Field71A>
+    </Body>
+</SwiftMessage>

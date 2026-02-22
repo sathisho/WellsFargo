@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Pega Case Data — Sample payment case for workflow validation -->
+<PegaCase>
+    <CaseID>WF-PAY-20260222-001</CaseID>
+    <CaseType>FEDPayment</CaseType>
+    <Status>Open</Status>
+    <Priority>High</Priority>
+    <PaymentDetails>
+        <PaymentType>FED</PaymentType>
+        <Amount>1000.00</Amount>
+        <Currency>USD</Currency>
+        <SenderName>Wells Fargo NA</SenderName>
+        <BeneficiaryName>Pega Test Beneficiary</BeneficiaryName>
+        <ValueDate>2026-02-22</ValueDate>
+    </PaymentDetails>
+    <WorkflowSteps>
+        <Step order="1" name="Initiate" status="Completed"/>
+        <Step order="2" name="Validate" status="Pending"/>
+        <Step order="3" name="Approve" status="NotStarted"/>
+        <Step order="4" name="Release" status="NotStarted"/>
+    </WorkflowSteps>
+</PegaCase>

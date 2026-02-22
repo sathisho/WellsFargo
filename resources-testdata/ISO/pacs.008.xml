@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ISO 20022 pacs.008 — FIToFICustomerCreditTransfer Sample -->
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08">
+    <FIToFICstmrCdtTrf>
+        <GrpHdr>
+            <MsgId>WFBIUS6S-20260222-001</MsgId>
+            <CreDtTm>2026-02-22T10:00:00</CreDtTm>
+            <NbOfTxs>1</NbOfTxs>
+            <SttlmInf>
+                <SttlmMtd>INGA</SttlmMtd>
+            </SttlmInf>
+        </GrpHdr>
+        <CdtTrfTxInf>
+            <PmtId>
+                <InstrId>INSTR-001</InstrId>
+                <EndToEndId>E2E-20260222-001</EndToEndId>
+            </PmtId>
+            <IntrBkSttlmAmt Ccy="USD">1000.00</IntrBkSttlmAmt>
+            <IntrBkSttlmDt>2026-02-22</IntrBkSttlmDt>
+            <Dbtr>
+                <Nm>Wells Fargo Bank NA</Nm>
+            </Dbtr>
+            <DbtrAgt>
+                <FinInstnId>
+                    <BICFI>WFBIUS6S</BICFI>
+                </FinInstnId>
+            </DbtrAgt>
+            <CdtrAgt>
+                <FinInstnId>
+                    <BICFI>CHASUS33</BICFI>
+                </FinInstnId>
+            </CdtrAgt>
+            <Cdtr>
+                <Nm>Automation Test Corp</Nm>
+            </Cdtr>
+        </CdtTrfTxInf>
+    </FIToFICstmrCdtTrf>
+</Document>

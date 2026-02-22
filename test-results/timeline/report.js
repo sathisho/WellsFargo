@@ -1,0 +1,4 @@
+$(document).ready(function() {
+CucumberHTML.timelineItems.pushArray([{"id":"07770c2e-f8fb-4d6d-a800-c668a1977973","feature":"Product Add to Cart and Checkout functionality","scenario":"Add iPhone to cart and proceed to checkout","start":1771754178721,"group":3,"content":"","tags":"@regression,@smoke,","end":1771754181291,"className":"passed"},{"id":"6799d8b3-e56f-436c-a20e-ae52a4aa3496","feature":"WIRES Application Login","scenario":"Successful login with valid credentials","start":1771754174235,"group":3,"content":"","tags":"@smoke,@login,","end":1771754178717,"className":"failed"},{"id":"5eade412-378b-4809-b644-6ddc1b12357f","feature":"Product Add to Cart and Checkout functionality","scenario":"Add iPhone to cart and proceed to checkout","start":1771754171627,"group":3,"content":"","tags":"@regression,@ecommerce,@smoke,","end":1771754174233,"className":"passed"}]);
+CucumberHTML.timelineGroups.pushArray([{"id":3,"content":"Thread[#3,main,5,main]"}]);
+});

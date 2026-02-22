@@ -7,51 +7,75 @@
     <artifactId>wellsfargo-automation</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>WellsFargo Automation Framework</name>
+    <name>WellsFargo Enterprise Automation Framework</name>
+
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <selenium.version>4.19.1</selenium.version>
+        <testng.version>7.10.2</testng.version>
+        <qaf.version>4.0.0-RC3</qaf.version>
+        <cucumber.version>7.15.0</cucumber.version>
+        <env>SIT</env>
+        <suite>testng-smoke.xml</suite>
     </properties>
+
     <dependencies>
-        <!-- Selenium WebDriver -->
+        <!-- ==================== QAF Framework ==================== -->
+        <!-- ==================== QAF Pattern (custom implementation) ==================== -->
+        <!-- QAF concepts applied without the QAF runtime dependency:
+             - Externalized locators via LocatorRepository
+             - Environment config via EnvironmentConfig
+             - TestResultCollector for dashboard
+             - WaitUtils replacing Thread.sleep()
+        -->
+
+        <!-- ==================== Selenium ==================== -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.19.1</version>
+            <version>${selenium.version}</version>
         </dependency>
-        <!-- WebDriverManager -->
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
             <version>5.7.0</version>
         </dependency>
-        <!-- Cucumber Java -->
+
+        <!-- ==================== Cucumber BDD ==================== -->
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
-            <version>7.15.0</version>
+            <version>${cucumber.version}</version>
         </dependency>
-        <!-- Cucumber TestNG -->
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-testng</artifactId>
-            <version>7.15.0</version>
+            <version>${cucumber.version}</version>
         </dependency>
-        <!-- TestNG -->
+
+        <!-- ==================== TestNG ==================== -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>7.10.2</version>
+            <version>${testng.version}</version>
             <scope>test</scope>
         </dependency>
-        <!-- Extent Reports -->
+
+        <!-- ==================== Reporting ==================== -->
         <dependency>
             <groupId>com.aventstack</groupId>
             <artifactId>extentreports</artifactId>
             <version>5.1.2</version>
         </dependency>
-        <!-- Log4j -->
+        <dependency>
+            <groupId>net.masterthought</groupId>
+            <artifactId>cucumber-reporting</artifactId>
+            <version>5.8.4</version>
+        </dependency>
+
+        <!-- ==================== Logging ==================== -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
@@ -62,37 +86,32 @@
             <artifactId>log4j-api</artifactId>
             <version>2.23.1</version>
         </dependency>
-        <!-- Masterthought Cucumber Reporting (QMetry-style reports) -->
-        <dependency>
-            <groupId>net.masterthought</groupId>
-            <artifactId>cucumber-reporting</artifactId>
-            <version>5.8.4</version>
-        </dependency>
-        <!-- Gson for JSON report processing -->
+
+        <!-- ==================== Utilities ==================== -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.11.0</version>
         </dependency>
-        <!-- Commons Lang3 (explicit to resolve version conflict with cucumber-reporting) -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.17.0</version>
         </dependency>
-        <!-- Jakarta Mail (Eclipse Angus - reference impl for Java 21) -->
+
+        <!-- ==================== Email ==================== -->
         <dependency>
             <groupId>org.eclipse.angus</groupId>
             <artifactId>angus-mail</artifactId>
             <version>2.0.3</version>
         </dependency>
-        <!-- Jakarta Activation (required by Jakarta Mail) -->
         <dependency>
             <groupId>jakarta.activation</groupId>
             <artifactId>jakarta.activation-api</artifactId>
             <version>2.1.3</version>
         </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -110,11 +129,38 @@
                 <version>3.2.5</version>
                 <configuration>
                     <includes>
-                        <include>**/runners/*.java</include>
+                        <include>**/runners/TestRunner.java</include>
                     </includes>
+                    <systemPropertyVariables>
+                        <env>${env}</env>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
-            <!-- QMetry reports generated programmatically via QMetryReportManager.java -->
         </plugins>
     </build>
+
+    <!-- ==================== QAF Execution Profile ==================== -->
+    <profiles>
+        <profile>
+            <id>qaf</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>3.2.5</version>
+                        <configuration>
+                            <suiteXmlFiles>
+                                <suiteXmlFile>${suite}</suiteXmlFile>
+                            </suiteXmlFiles>
+                            <systemPropertyVariables>
+                                <env>${env}</env>
+                            </systemPropertyVariables>
+                            <argLine>-Denv=${env}</argLine>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

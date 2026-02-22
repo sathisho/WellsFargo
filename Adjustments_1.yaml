@@ -1,0 +1,31 @@
+# ==============================================================
+# Adjustments_1.yaml — Regression Suite (SIT)
+# Usage: mvn clean test -Pqaf -Dsuite=Adjustments_1.yaml -Denv=SIT
+# ==============================================================
+
+name: "Regression Suite - SIT Adjustments"
+environment: SIT
+browser: chrome
+parallel: false
+
+groups:
+  - name: "FED Payment Regression"
+    tags:
+      - "@Regression"
+      - "@SIT"
+      - "@Payments"
+    scenarios:
+      - scenarios/Regression/SIT/CreatePayment.feature
+      - scenarios/Regression/SIT/CreateFedPayment.feature
+
+  - name: "SIT Login Verification"
+    tags:
+      - "@Smoke"
+    scenarios:
+      - scenarios/Smoke/Login.feature
+
+execution:
+  retryFailedTests: 1
+  timeout: 300
+  screenshots: true
+  reportDir: test-results

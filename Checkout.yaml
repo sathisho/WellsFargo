@@ -1,0 +1,19 @@
+# ============================================================
+# Checkout Suite — E-Commerce Smoke Test
+# ============================================================
+# Run: mvn test -Pqaf -Dsuite=Checkout.yaml -Denv=SIT
+
+name: E-Commerce Checkout Suite
+parallel: false
+verbose: 2
+
+groups:
+  - name: Checkout Smoke
+    parameters:
+      env: SIT
+    tests:
+      - name: iPhone Add to Cart & Checkout
+        includes:
+          - "@Smoke and @ECommerce"
+        excludes:
+          - "@Skip"

@@ -1,0 +1,33 @@
+{
+  "total": 3,
+  "passed": 2,
+  "failed": 1,
+  "skipped": 0,
+  "pass_rate": "67%",
+  "duration_ms": 23692,
+  "duration_readable": "0m 23s",
+  "scenarios": [
+    {
+      "feature": "Checkout",
+      "scenario": "Add iPhone to cart and proceed to checkout",
+      "status": "PASS",
+      "duration_ms": 2519,
+      "timestamp": "2026-02-22T15:26:14.147516"
+    },
+    {
+      "feature": "Login",
+      "scenario": "Successful login with valid credentials",
+      "status": "FAIL",
+      "duration_ms": 4290,
+      "timestamp": "2026-02-22T15:26:18.633318",
+      "error": "Scenario failed — see screenshot"
+    },
+    {
+      "feature": "Checkout",
+      "scenario": "Add iPhone to cart and proceed to checkout",
+      "status": "PASS",
+      "duration_ms": 2490,
+      "timestamp": "2026-02-22T15:26:21.21116"
+    }
+  ]
+}

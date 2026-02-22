@@ -1,0 +1,8 @@
+{
+  "feature": "Login",
+  "scenario": "Successful login with valid credentials",
+  "status": "FAIL",
+  "duration_ms": 4290,
+  "timestamp": "2026-02-22T15:26:18.633318",
+  "error": "Scenario failed — see screenshot"
+}

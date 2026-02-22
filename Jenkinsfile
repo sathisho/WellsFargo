@@ -1,4 +1,7 @@
-pipeline {
+tools {
+    maven 'Maven'       ← Jenkins finds Maven at /opt/homebrew/opt/maven/libexec
+    jdk 'JDK21'         ← Jenkins switches to JDK 21
+}pipeline {
     agent any
 
     tools {

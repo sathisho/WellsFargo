@@ -1,0 +1,21 @@
+# ==============================================================
+# Smoke.yaml — Smoke Test Suite
+# Usage: mvn clean test -Pqaf -Dsuite=Smoke.yaml -Denv=SIT
+# ==============================================================
+
+name: "Smoke Test Suite"
+environment: SIT
+browser: chrome
+parallel: false
+
+groups:
+  - name: "Login Smoke"
+    tags:
+      - "@Smoke"
+    scenarios:
+      - scenarios/Smoke/Login.feature
+
+execution:
+  retryFailedTests: 0
+  timeout: 120
+  screenshots: true

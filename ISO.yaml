@@ -1,0 +1,27 @@
+# ==============================================================
+# ISO.yaml — ISO Message Validation Suite
+# Usage: mvn clean test -Pqaf -Dsuite=ISO.yaml -Denv=SIT
+# ==============================================================
+
+name: "ISO Message Validation Suite"
+environment: SIT
+browser: chrome
+parallel: false
+
+groups:
+  - name: "ISO 20022 Validation"
+    tags:
+      - "@ISO"
+    scenarios:
+      - scenarios/ISO/ISOMessageValidation.feature
+
+  - name: "Payment Regression for ISO"
+    tags:
+      - "@Payments"
+    scenarios:
+      - scenarios/Regression/SIT/CreatePayment.feature
+
+execution:
+  retryFailedTests: 1
+  timeout: 300
+  testdata: resources-testdata/ISO

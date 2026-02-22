@@ -1,0 +1,7 @@
+{
+  "feature": "Checkout",
+  "scenario": "Add iPhone to cart and proceed to checkout",
+  "status": "PASS",
+  "duration_ms": 2490,
+  "timestamp": "2026-02-22T15:26:21.21116"
+}
