@@ -67,4 +67,28 @@ public class CheckoutSteps {
                 "Expected checkout warning to contain: '" + expectedMessage +
                 "' but was: '" + actualMessage + "'");
     }
+
+    @And("User clicks on the product {string}")
+    public void user_clicks_on_the_product(String productName) {
+        slowDown();
+        checkoutPage.clickOnProduct(productName);
+    }
+
+    @And("User selects option {string} from the product select dropdown")
+    public void user_selects_option_from_the_product_select_dropdown(String optionIndex) {
+        slowDown();
+        checkoutPage.selectProductOption(optionIndex);
+    }
+
+    @And("User clicks on Add to Cart button on the product page")
+    public void user_clicks_on_add_to_cart_button_on_the_product_page() {
+        slowDown();
+        checkoutPage.clickProductPageAddToCart();
+    }
+
+    @And("User fills all required product options")
+    public void user_fills_all_required_product_options() {
+        slowDown();
+        checkoutPage.fillAllRequiredProductOptions();
+    }
 }
