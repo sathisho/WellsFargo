@@ -1,0 +1,34 @@
+# Build output
+target/
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+*.swp
+
+# Maven
+.mvn/
+mvnw
+mvnw.cmd
+
+# HyperExecute artifacts
+hyperexecute
+hyperexecute-cli.log
+hyperexecute-code-*.zip
+.updatedhyperexecute.yaml
+.hyperexecute/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Reports (generated at runtime)
+src/test/resources/reports/*.html
+src/test/resources/reports/*.json
+src/test/resources/reports/timeline/
+src/test/resources/logs/
+target/qmetry-reports/
+
+# Sensitive files - NEVER commit passwords/keys
+# config.properties contains email password - be careful

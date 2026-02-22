@@ -1,0 +1,72 @@
+---
+version: 0.1
+globalTimeout: 90
+testSuiteTimeout: 90
+testSuiteStep: 90
+
+runson: linux
+
+autosplit: true
+
+retryOnFailure: true
+maxRetries: 2
+
+concurrency: 2
+
+runtime:
+  language: java
+  version: "21"
+
+env:
+  CACHE_DIR: m2_cache_dir
+
+cacheKey: '{{ checksum "pom.xml" }}'
+cacheDirectories:
+  - $CACHE_DIR
+
+pre:
+  - mvn -Dmaven.repo.local=$CACHE_DIR -Dmaven.test.skip=true clean install
+
+testDiscovery:
+  type: raw
+  mode: dynamic
+  command: find src/test/resources/features -type f -name "*.feature"
+
+testRunnerCommand: mvn test -Dmaven.repo.local=$CACHE_DIR -Dcucumber.features=$test -Dexecution.mode=remote -DbuildName="HyperExecute-${jobLabel}"
+
+framework:
+  name: maven/testng
+  defaultReports: false
+
+mergeArtifacts: true
+
+report: true
+partialReports:
+  - location: src/test/resources/reports/
+    type: html
+    frameworkName: extent
+
+uploadArtefacts:
+  - name: ExtentReport
+    path:
+      - src/test/resources/reports/extent.html
+  - name: CucumberReport
+    path:
+      - src/test/resources/reports/cucumber.html
+  - name: QMetrySummaryReport
+    path:
+      - src/test/resources/reports/qmetry-summary.html
+  - name: QMetryJsonReport
+    path:
+      - src/test/resources/reports/qmetry-results.json
+  - name: CucumberJsonData
+    path:
+      - src/test/resources/reports/cucumber-report.json
+  - name: QMetryHyperExecuteReport
+    path:
+      - src/test/resources/reports/qmetry-hyperexecute.html
+
+jobLabel:
+  - wellsfargo-automation
+  - cucumber-testng
+  - selenium

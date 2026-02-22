@@ -8,11 +8,18 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import utils.ExtentManager;
+import utils.QMetryReportManager;
 
 @CucumberOptions(
         features = "src/test/resources/features",
         glue = {"stepdefinitions"},
-        plugin = {"pretty", "html:src/test/resources/reports/cucumber.html"},
+        plugin = {
+                "pretty",
+                "html:src/test/resources/reports/cucumber.html",
+                "json:src/test/resources/reports/cucumber-report.json",
+                "timeline:src/test/resources/reports/timeline",
+                "usage:src/test/resources/reports/cucumber-usage.json"
+        },
         monochrome = true
 )
 public class TestRunner extends AbstractTestNGCucumberTests {
@@ -29,6 +36,13 @@ public class TestRunner extends AbstractTestNGCucumberTests {
     public static void tearDownReport() {
         if (extent != null) {
             extent.flush();
+        }
+        // Generate QMetry Reports (non-blocking - report failure should not fail the test suite)
+        try {
+            QMetryReportManager.generateQMetryReport();
+        } catch (Exception e) {
+            System.err.println("QMetry report generation failed (non-blocking): " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }
