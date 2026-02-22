@@ -21,12 +21,12 @@ public class LoginSteps {
 
     @Given("User is on Login page")
     public void user_is_on_login_page() {
-        driver.get(ConfigReader.getProperty("baseUrl"));
+        driver.get("https://tutorialsninja.com/demo/index.php?route=account/login");
     }
 
     @Given("User is on Home page")
     public void user_is_on_home_page() {
-        driver.get("https://tutorialsninja.com/demo/index.php?route=common/home");
+        driver.get(ConfigReader.getProperty("baseUrl"));
     }
 
     @When("User enters username {string} and password {string}")

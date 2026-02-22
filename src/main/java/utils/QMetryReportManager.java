@@ -78,6 +78,9 @@ public class QMetryReportManager {
         jobLabel = System.getenv().getOrDefault("JOB_LABEL", "wellsfargo-automation");
 
         try {
+            // Wait for Cucumber JSON to be fully written (flush delay)
+            waitForCucumberJson();
+
             Reportable masterthoughtResult = generateMasterthoughtReport();
             ReportSummary summary = generateQMetrySummaryReport();
             generateQMetryJsonReport(summary);
@@ -92,11 +95,37 @@ public class QMetryReportManager {
             Log.info("    - HyperExecute Report:     " + QMETRY_HE_REPORT);
 
             // Send email with reports
-            sendEmailReport(summary);
+            if (summary != null) {
+                sendEmailReport(summary);
+            } else {
+                Log.warn("Skipping email - no summary data available");
+            }
         } catch (Exception e) {
             Log.error("Failed to generate QMetry reports: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Wait for the Cucumber JSON file to be fully written and valid.
+     */
+    private static void waitForCucumberJson() {
+        File cucumberJson = new File(CUCUMBER_JSON_PATH);
+        int maxRetries = 10;
+        for (int i = 0; i < maxRetries; i++) {
+            if (cucumberJson.exists() && cucumberJson.length() > 10) {
+                try {
+                    // Verify it's valid JSON
+                    JsonParser.parseReader(new FileReader(cucumberJson)).getAsJsonArray();
+                    Log.info("Cucumber JSON ready (" + cucumberJson.length() + " bytes)");
+                    return;
+                } catch (Exception e) {
+                    Log.info("Cucumber JSON not ready yet, waiting... (attempt " + (i + 1) + ")");
+                }
+            }
+            try { Thread.sleep(500); } catch (InterruptedException ignored) {}
+        }
+        Log.warn("Cucumber JSON may not be fully written after " + maxRetries + " retries");
     }
 
     /**

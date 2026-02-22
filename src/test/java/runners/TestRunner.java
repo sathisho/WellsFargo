@@ -3,6 +3,7 @@ package runners;
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
@@ -37,7 +38,11 @@ public class TestRunner extends AbstractTestNGCucumberTests {
         if (extent != null) {
             extent.flush();
         }
-        // Generate QMetry Reports (non-blocking - report failure should not fail the test suite)
+    }
+
+    @AfterSuite
+    public static void generateReports() {
+        // Generate QMetry Reports after Cucumber has fully written all JSON files
         try {
             QMetryReportManager.generateQMetryReport();
         } catch (Exception e) {
