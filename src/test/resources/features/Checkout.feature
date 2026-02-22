@@ -1,5 +1,7 @@
+@Regression
 Feature: Product Add to Cart and Checkout functionality
 
+  @Smoke
   Scenario: Add iPhone to cart and proceed to checkout
     Given User is on Home page
     When User enters "iphone" in the search box

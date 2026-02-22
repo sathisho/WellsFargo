@@ -1,0 +1,53 @@
+name: 🧪 CD - Regression Tests
+
+# Triggers on push to main branch or manual trigger
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Test Environment'
+        required: true
+        default: 'QA'
+        type: choice
+        options:
+          - QA
+          - Staging
+          - Production
+
+jobs:
+  regression-tests:
+    name: 🧪 Full Regression Suite
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: ☕ Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: 🔨 Build project
+        run: mvn compile test-compile -q
+
+      - name: 🧪 Run Full Regression Tests
+        run: mvn test -Dcucumber.filter.tags="@Regression" -Dexecution.mode=local
+
+      - name: 📊 Upload Test Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: regression-test-reports
+          path: |
+            src/test/resources/reports/
+            target/qmetry-reports/
+          retention-days: 30
+
+      - name: 📧 Send Email Report
+        if: always()
+        run: echo "📧 Email report would be sent here (requires App Password configuration)"

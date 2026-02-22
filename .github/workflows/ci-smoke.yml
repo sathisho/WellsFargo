@@ -1,0 +1,50 @@
+name: 🔥 CI - Smoke Tests
+
+# Triggers on every push and pull request
+on:
+  push:
+    branches: [Devlop, main]
+  pull_request:
+    branches: [Devlop, main]
+
+jobs:
+  smoke-tests:
+    name: 🔥 Smoke Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: ☕ Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: 🔨 Build project
+        run: mvn compile test-compile -q
+
+      - name: 🧪 Run Smoke Tests
+        run: mvn test -Dcucumber.filter.tags="@Smoke" -Dexecution.mode=local
+        continue-on-error: false
+
+      - name: 📊 Upload Test Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-test-reports
+          path: |
+            src/test/resources/reports/
+            target/qmetry-reports/
+          retention-days: 30
+
+      - name: 📋 Publish Test Summary
+        if: always()
+        uses: dorny/test-reporter@v1
+        with:
+          name: Smoke Test Results
+          path: src/test/resources/reports/cucumber-report.json
+          reporter: java-junit
+          fail-on-error: false
